@@ -32,12 +32,10 @@ export default function Login() {
         width: "380px",
         padding: "40px 40px",
         marginTop: "150px",
-        height:'410px'
+        height:'425px'
       }}
     >
-      <h1 style={{ fontFamily: "cursive", fontSize: "32px", marginBottom: "30px" }}>
-        Instagram
-      </h1>
+      <img className="p-5 py-4" src="/insta logo.png" alt="logo" />
 
       <form
         onSubmit={handleSubmit(submitForm)}
