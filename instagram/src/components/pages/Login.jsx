@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import { client } from "../lib/index.js"
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { Navigate } from "react-router";
 import { Link } from "react-router";
 
 const formSchema = z.object({
@@ -10,6 +12,9 @@ const formSchema = z.object({
 });
 
 export default function Login() {
+
+  const [error, setError] = useState(false)
+
   const {
     handleSubmit,
     register,
@@ -18,8 +23,20 @@ export default function Login() {
     resolver: zodResolver(formSchema),
   });
 
-  function submitForm(data) {
-    console.log("Form submitted:", data);
+  async function submitForm(data) {
+    
+    try{
+      const res = await client.post("/user/login" ,{"username": data.username, "password": data.password})
+      if(res?.response?.data?.status === "success"){
+        localStorage.setItem("jwttoken", res?.accessToken)
+        // return <Navigate to="/home" replace />
+      }else{
+        setError(true)
+      }
+    }catch{
+      setError(true)
+    }
+    
   }
 
   return (
@@ -73,9 +90,8 @@ export default function Login() {
       <p className="mt-8 text-gray-700 py-10">
         Don’t have an account?{" "}
         <Link to='/user/signup' className="text-blue-500 font-semibold">Sign up</Link>
-          
-        
       </p>
+      {error ? <p className="text-red-600">Your Username or Password is wrong</p>:null}
     </div>
     </div>
   );

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useNavigate } from "react-router";
+import { client } from "../lib";
 import { Link } from "react-router";
 
 const formSchema = z.object({
@@ -12,6 +14,9 @@ const formSchema = z.object({
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(false)
+  const navigate = useNavigate();
+
 
   const {
     handleSubmit,
@@ -21,8 +26,20 @@ export default function SignUp() {
     resolver: zodResolver(formSchema),
   });
 
-  function submitForm(data) {
-    console.log("Form submitted:", data);
+  async function submitForm(data) {
+      console.log(data)
+      try{
+        const res = await client.post("/user/signup" ,{"username": data.username, "password": data.password, "email":data.email})
+        if(res?.status === 200){
+          navigate("/user/login");
+        }else{
+          console.log(res?.status)
+          setError(true)
+        }
+      }catch{
+        setError(true)
+      }
+      
   }
 
   return (
@@ -81,6 +98,7 @@ export default function SignUp() {
         Already have an account?{" "}
         <Link to='/user/login' className="text-blue-500 font-semibold">Log in</Link>
       </p>
+      {error ? <p className="text-red-600">User Already exist</p>:null}
     </div>
   );
 }
