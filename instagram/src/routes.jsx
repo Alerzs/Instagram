@@ -5,7 +5,7 @@ import { Login } from "./components/"
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/user/login",
     element: <Login />,
   },
   
