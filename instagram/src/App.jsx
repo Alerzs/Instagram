@@ -1,11 +1,10 @@
-import Sidebar from './components/shared/sidebar';
-
+import { RouterProvider } from 'react-router'
+import { router } from './routes'
 
 function App() {
-  return(
-    <Sidebar />
+  return (
+    <RouterProvider router={router} />
   )
 }
 
 export default App
-
