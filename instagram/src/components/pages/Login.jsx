@@ -2,13 +2,14 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { Link } from "react-router";
 
 const formSchema = z.object({
   username: z.string().min(1, "User Name is required"),
   password: z.string().min(1, "Password is required"),
 });
 
-export default function LoginForm() {
+export default function Login() {
   const {
     handleSubmit,
     register,
@@ -22,15 +23,16 @@ export default function LoginForm() {
   }
 
   return (
+    <div className="flex  justify-center gap-20 pb-30">
+    <img src="/Group 91.png" alt="img" />
     <div
       className="flex flex-col items-center justify-center"
       style={{
-        border: "2px solid #ff33cc",
-        width: "320px",
-        padding: "40px 30px",
-        margin: "auto",
-        marginTop: "80px",
-        borderRadius: "8px",
+        border: "1px solid #CACACA",
+        width: "380px",
+        padding: "40px 40px",
+        marginTop: "150px",
+        height:'410px'
       }}
     >
       <h1 style={{ fontFamily: "cursive", fontSize: "32px", marginBottom: "30px" }}>
@@ -68,12 +70,13 @@ export default function LoginForm() {
         </button>
       </form>
 
-      <p className="mt-8 text-gray-700">
+      <p className="mt-8 text-gray-700 py-10">
         Don’t have an account?{" "}
-        <a href="#" className="text-blue-500 font-semibold">
-          Sign up
-        </a>
+        <Link to='/user/signup' className="text-blue-500 font-semibold">Sign up</Link>
+          
+        
       </p>
+    </div>
     </div>
   );
 }
