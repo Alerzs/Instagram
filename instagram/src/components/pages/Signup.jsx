@@ -43,8 +43,8 @@ export default function SignUp() {
   }
 
   return (
-    <div className="w-[400px] mx-auto mt-36 p-10 border border-gray-300  bg-white font-sans">
-      <h1 className="text-4xl mb-8 font-cursive select-none text-center">Instagram</h1>
+    <div className="w-[400px] mx-auto mt-36 p-9 border border-gray-300  bg-white font-sans">
+       <img className="px-6 pb-2 " src="/insta logo.png" alt="logo" />
 
       <form onSubmit={handleSubmit(submitForm)} className="flex flex-col gap-4">
         <input
