@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { client } from "../lib/index.js"
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Navigate } from "react-router";
 import { Link } from "react-router";
 
 const formSchema = z.object({
@@ -12,7 +12,7 @@ const formSchema = z.object({
 });
 
 export default function Login() {
-
+  const navigate = useNavigate();
   const [error, setError] = useState(false)
 
   const {
@@ -27,9 +27,9 @@ export default function Login() {
     
     try{
       const res = await client.post("/user/login" ,{"username": data.username, "password": data.password})
-      if(res?.response?.data?.status === "success"){
-        localStorage.setItem("jwttoken", res?.accessToken)
-        // return <Navigate to="/home" replace />
+      if(res?.status === 200){
+        localStorage.setItem("jwttoken", res?.data?.accessToken)
+        navigate("/home");
       }else{
         setError(true)
       }
@@ -49,12 +49,10 @@ export default function Login() {
         width: "380px",
         padding: "40px 40px",
         marginTop: "150px",
-        height:'410px'
+        height:'425px'
       }}
     >
-      <h1 style={{ fontFamily: "cursive", fontSize: "32px", marginBottom: "30px" }}>
-        Instagram
-      </h1>
+      <img className="p-5 py-4" src="/insta logo.png" alt="logo" />
 
       <form
         onSubmit={handleSubmit(submitForm)}

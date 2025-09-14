@@ -3,6 +3,8 @@ import  Login  from "./components/pages/Login.jsx"
 import SignUp from "./components/pages/Signup.jsx";
 import Profile from "./components/pages/Profile.jsx";
 import Userpage from './components/pages/Userpage.jsx';
+import Home from "./components/pages/Home.jsx";
+
 
 
 export const router = createBrowserRouter([
@@ -23,5 +25,10 @@ export const router = createBrowserRouter([
   {
     path:'/user-page',
     element:<Userpage />
-  }  
+  },
+  {
+    path:'/home',
+    element:<Home />
+  }
+  
   ]);
