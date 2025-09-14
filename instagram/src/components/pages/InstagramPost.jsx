@@ -18,7 +18,7 @@ const InstagramPost = ({username, content, likess, comments}) => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white   shadow-md">
+    <div className="w-[500px] mx-auto bg-white   shadow-md m-4">
       
       <div className="flex items-center p-4">
         <img

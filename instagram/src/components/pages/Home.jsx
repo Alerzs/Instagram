@@ -3,8 +3,10 @@ import Sidebar from '../shared/sidebar.jsx'
 import { useEffect, useState } from 'react'
 import { client } from "../lib";
 
+
 export default function Home() {
     const [postData, setPostData] = useState([])
+
 
     useEffect(() => {
         const token = localStorage.getItem("jwttoken")
