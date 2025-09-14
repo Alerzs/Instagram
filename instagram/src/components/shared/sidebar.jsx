@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import logo from '../../assets/icons/logo.png';
 import { AiOutlineHome, AiOutlineSearch, AiOutlinePlusSquare, AiOutlineProfile } from 'react-icons/ai';
 import SearchResults from './SearchResults';
-import axios from 'axios';
 import { client } from '../lib';
+import { Link } from 'react-router';
+
 
 
 export default function Sidebar() {
@@ -14,13 +15,6 @@ export default function Sidebar() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
-  const sideBarItem = [
-    { id: 1, text: "", link: "/", icon: logo, isImage: true },
-    { id: 2, text: "Home", link: "/", icon: <AiOutlineHome size={24} /> },
-    { id: 3, text: "Search", link: "/#", icon: <AiOutlineSearch size={24} /> },
-    { id: 4, text: "Create", link: "/#", icon: <AiOutlinePlusSquare size={24} /> },
-    { id: 5, text: "Profile", link: "/#", icon: <AiOutlineProfile size={24} /> },
-  ];
 
   const handleClick = (item) => {
     if (item.text === "Search") {
@@ -57,7 +51,6 @@ export default function Sidebar() {
     } catch (error) {
       console.error(error);
       console.error('Submit error:', error.message);
-      // alert('Error submitting post');
     }
   };
 
@@ -69,25 +62,51 @@ export default function Sidebar() {
         `}
       >
         <ul className="list-none p-0 m-0">
-          {sideBarItem.map(item => (
-            <li key={item.id} className="my-2">
+            <li className="my-2">
+                <img src={logo} alt='home' className="w-20 h-auto object-contain" />
+            </li>
+            <li className="my-2">
+              <Link to="/"
+                className="flex items-center gap-3 p-2 text-sm text-black hover:bg-gray-100 cursor-pointer"
+              >
+              <span><AiOutlineHome size={24} /></span>
+              <span>Home</span>
+              </Link>
+            </li>
+            <li className="my-2">
               <a
-                href="#"
+                href="/"
                 onClick={e => {
                   e.preventDefault();
-                  handleClick(item);
+                  handleClick({ id: 3, text: "Search", link: "/#", icon: <AiOutlineSearch size={24} /> });
                 }}
                 className="flex items-center gap-3 p-2 text-sm text-black hover:bg-gray-100 cursor-pointer"
               >
-                {item.isImage ? (
-                  <img src={item.icon} alt={item.text} className="w-20 h-auto object-contain" />
-                ) : (
-                  <span>{item.icon}</span>
-                )}
-                {item.text && !isSearchOpen && <span>{item.text}</span>}
+                <span><AiOutlineSearch size={24} /></span>
+                <span>Search</span>
               </a>
             </li>
-          ))}
+            <li className="my-2">
+              <a
+                href="/"
+                onClick={e => {
+                  e.preventDefault();
+                  handleClick({ id: 4, text: "Create", link: "/#", icon: <AiOutlinePlusSquare size={24} /> });
+                }}
+                className="flex items-center gap-3 p-2 text-sm text-black hover:bg-gray-100 cursor-pointer"
+              >
+                <span><AiOutlinePlusSquare size={24} /></span>
+                <span>Create</span>
+              </a>
+            </li>
+            <li className="my-2">
+              <Link to='/Profile'
+                className="flex items-center gap-3 p-2 text-sm text-black hover:bg-gray-100 cursor-pointer"
+              >
+                <span><AiOutlineProfile size={24} /></span>
+                <span>Profile</span>
+              </Link>
+            </li>
         </ul>
       </nav>
 
