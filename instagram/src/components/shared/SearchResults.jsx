@@ -1,29 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { client } from '../lib';
-import profile from "../../assets/icons/images.jpg"
+import profile from "../../assets/icons/images.jpg";
 
 export default function SearchResults() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
 
-  const handleKeyDown = async (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
+  useEffect(() => {
+    if (!query.trim()) {
+      setResults([]);
+      return;
+    }
 
-      if (!query.trim()) {
-        setResults([]);
-        return;
-      }
-
+    const fetchData = async () => {
       try {
-        const res = await client.get(`/user/searchUser?search=${query.trim()}`);
+        const res = await client.get(`/user/searchUser?search=${encodeURIComponent(query.trim())}`);
         setResults(res.data.users || []);
       } catch (error) {
         console.log(error);
         setResults([]);
       }
-    }
-  };
+    };
+
+    fetchData();
+  }, [query]);
 
   return (
     <div>
@@ -34,7 +34,6 @@ export default function SearchResults() {
         placeholder="Search users..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        onKeyDown={handleKeyDown}
         className="w-full px-2 py-1 border border-gray-300 rounded-[8px] mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-[#d2d0d0]"
       />
 
@@ -43,8 +42,9 @@ export default function SearchResults() {
       ) : (
         results.map((user) => (
           <div key={user._id} className="flex items-center gap-3 mb-3">
-            <img  
+            <img
               src={profile}
+              alt={`${user.username}'s avatar`}
               className="w-10 h-10 rounded-full object-cover"
             />
             <p className="text-sm font-medium">{user.username}</p>
