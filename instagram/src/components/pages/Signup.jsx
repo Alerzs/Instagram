@@ -32,7 +32,6 @@ export default function SignUp() {
         if(res?.status === 200){
           navigate("/user/login");
         }else{
-          console.log(res?.status)
           setError(true)
         }
       }catch{

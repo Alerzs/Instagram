@@ -15,7 +15,6 @@ export default function Home() {
             headers: { Authorization: `Bearer ${token}` }}
             )
             setPostData(res?.data?.Articles)
-            console.log(res?.data?.Articles)
         }
         getData()
     }, [])

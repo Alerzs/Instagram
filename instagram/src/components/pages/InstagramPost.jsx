@@ -7,7 +7,6 @@ const InstagramPost = ({username, content, likess, comments}) => {
   const initialLikes = likess.length
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(initialLikes);
-  console.log(initialLikes)
   const toggleLike = () => {
     if (liked) {
       setLikes(likes - 1);

@@ -47,7 +47,6 @@ export default function SearchResults() {
               alt={`${user.username}'s avatar`}
               className="w-10 h-10 rounded-full object-cover"
             />
-            {console.log(user)}
             <a href={user._id} className="text-sm font-medium">{user.username}</a>
           </div>
         ))

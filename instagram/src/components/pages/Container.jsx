@@ -2,7 +2,6 @@ import InstagramPost from "./InstagramPost"
 
 
 export function Container({ data }){
-    console.log(data)
     return(
         <div className="flex flex-col mx-auto gap-5">
             {data.map((val) => {            
