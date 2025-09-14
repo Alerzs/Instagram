@@ -24,11 +24,15 @@ export const router = createBrowserRouter([
   },
   {
     path:'/user-page',
-    element:<Userpage />
+    element:<Profile />
   },
   {
     path:'/home',
     element:<Home />
+  },
+  {
+    path:'/:id',
+    element:<Userpage />
   }
   
   ]);

@@ -40,6 +40,8 @@ const PostGrid = ({ posts }) => {
 };
 
 export default function Userpage() {
+
+
   const posts = [
     { id: 1, imageUrl: car },
     { id: 2, imageUrl: phone },
@@ -59,7 +61,6 @@ export default function Userpage() {
   async function getFollowers() {
     try {
       const res = await client.get("/api/user/followings/johndoe");
-      // const result = res.following
       console.log(res);
     } catch (error) {
       console.log(error);

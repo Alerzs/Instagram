@@ -6,6 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Link } from "react-router";
 
+
+
 const formSchema = z.object({
   username: z.string().min(1, "User Name is required"),
   password: z.string().min(1, "Password is required"),
@@ -29,6 +31,7 @@ export default function Login() {
       const res = await client.post("/user/login" ,{"username": data.username, "password": data.password})
       if(res?.status === 200){
         localStorage.setItem("jwttoken", res?.data?.accessToken)
+        
         navigate("/home");
       }else{
         setError(true)
