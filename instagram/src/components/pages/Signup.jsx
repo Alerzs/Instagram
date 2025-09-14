@@ -27,7 +27,6 @@ export default function SignUp() {
   });
 
   async function submitForm(data) {
-      console.log(data)
       try{
         const res = await client.post("/user/signup" ,{"username": data.username, "password": data.password, "email":data.email})
         if(res?.status === 200){
