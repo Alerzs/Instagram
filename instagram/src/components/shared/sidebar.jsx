@@ -2,9 +2,17 @@ import React, { useState } from 'react';
 import logo from '../../assets/icons/logo.png';
 import { AiOutlineHome, AiOutlineSearch, AiOutlinePlusSquare, AiOutlineProfile } from 'react-icons/ai';
 import SearchResults from './SearchResults';
+import axios from 'axios';
+import { client } from '../lib';
+
 
 export default function Sidebar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+
+
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
 
   const sideBarItem = [
     { id: 1, text: "", link: "/", icon: logo, isImage: true },
@@ -17,8 +25,39 @@ export default function Sidebar() {
   const handleClick = (item) => {
     if (item.text === "Search") {
       setIsSearchOpen(true);
+      setIsCreateOpen(false);
+    } else if (item.text === "Create") {
+      setIsCreateOpen(true);
+      setIsSearchOpen(false);
     } else {
       setIsSearchOpen(false);
+      setIsCreateOpen(false);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!title.trim() || !content.trim()) {
+      alert("Title and Content cannot be empty");
+      return;
+    }
+  
+    try {
+      const response = await client.post('/article', { title, content }, {
+        headers: {
+          Authorization: {
+            
+          }
+        }
+      });
+      console.log('Response:', response.data);
+      alert('Post submitted!');
+      setTitle('');
+      setContent('');
+      setIsCreateOpen(false);
+    } catch (error) {
+      console.error(error);
+      console.error('Submit error:', error.message);
+      // alert('Error submitting post');
     }
   };
 
@@ -55,6 +94,51 @@ export default function Sidebar() {
       {isSearchOpen && (
         <div className="w-72 p-5 border-l border-gray-300 bg-white">
           <SearchResults />
+        </div>
+      )}
+
+      {isCreateOpen && (
+        <div className="fixed inset-0 bg-[#ffffff90] flex justify-center items-center z-50">
+          <div className="bg-white rounded-lg p-6 w-[400px] h-[400px] relative">
+            <h3 className="text-center font-bold mb-4 ">Create new post</h3>
+            <hr className='w-full m-0  border-t border-gray-300' />
+            <div className='mt-20'>
+              <input
+                type="text"
+                placeholder="Title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+
+              <input
+                type="text"
+                placeholder="Content"
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </div>
+
+            <div className="flex justify-center">
+              <button
+                onClick={handleSubmit}
+                className="bg-blue-500 text-white px-4 py-2 rounded-[10px] hover:bg-blue-600 transition mt-5"
+              >
+                Select from computer
+              </button>
+            </div>
+
+            <button
+              onClick={() => setIsCreateOpen(false)}
+              className="absolute top-2 right-3 text-gray-500 hover:text-gray-700 text-xl "
+              aria-label="Close modal"
+            >
+              &times;
+            </button>
+          </div>
         </div>
       )}
     </div>
