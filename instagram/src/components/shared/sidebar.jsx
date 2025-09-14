@@ -30,18 +30,16 @@ export default function Sidebar() {
   };
 
   const handleSubmit = async () => {
+    const token = localStorage.getItem("jwttoken")
     if (!title.trim() || !content.trim()) {
       alert("Title and Content cannot be empty");
       return;
     }
   
     try {
+
       const response = await client.post('/article', { title, content }, {
-        headers: {
-          Authorization: {
-            
-          }
-        }
+        headers: { Authorization: `Bearer ${token}`}
       });
       console.log('Response:', response.data);
       alert('Post submitted!');
