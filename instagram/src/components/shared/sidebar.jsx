@@ -115,7 +115,7 @@ export default function Sidebar() {
       )}
 
       {isCreateOpen && (
-        <div className="fixed inset-0 bg-[#ffffff90] flex justify-center items-center z-50">
+        <div className="fixed inset-0 bg-[#eeeded90] flex justify-center items-center z-50">
           <div className="bg-white rounded-lg p-6 w-[400px] h-[400px] relative">
             <h3 className="text-center font-bold mb-4 ">Create new post</h3>
             <hr className='w-full m-0  border-t border-gray-300' />
