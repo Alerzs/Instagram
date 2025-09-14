@@ -3,18 +3,14 @@ import logo from '../../assets/icons/logo.png';
 import { AiOutlineHome, AiOutlineSearch, AiOutlinePlusSquare, AiOutlineProfile } from 'react-icons/ai';
 import SearchResults from './SearchResults';
 import { client } from '../lib';
-import { Link } from 'react-router';
-
-
+import { Link } from 'react-router';  // طبق کد خودت
 
 export default function Sidebar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
 
-
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-
 
   const handleClick = (item) => {
     if (item.text === "Search") {
@@ -35,9 +31,8 @@ export default function Sidebar() {
       alert("Title and Content cannot be empty");
       return;
     }
-  
-    try {
 
+    try {
       const response = await client.post('/article', { title, content }, {
         headers: { Authorization: `Bearer ${token}`}
       });
@@ -60,51 +55,55 @@ export default function Sidebar() {
         `}
       >
         <ul className="list-none p-0 m-0">
-            <li className="my-2">
-                <img src={logo} alt='home' className="w-20 h-auto object-contain" />
-            </li>
-            <li className="my-2">
-              <Link to="/"
-                className="flex items-center gap-3 p-2 text-sm text-black hover:bg-gray-100 cursor-pointer"
-              >
-              <span><AiOutlineHome size={24} /></span>
-              <span>Home</span>
-              </Link>
-            </li>
-            <li className="my-2">
-              <a
-                href="/"
-                onClick={e => {
-                  e.preventDefault();
-                  handleClick({ id: 3, text: "Search", link: "/#", icon: <AiOutlineSearch size={24} /> });
-                }}
-                className="flex items-center gap-3 p-2 text-sm text-black hover:bg-gray-100 cursor-pointer"
-              >
-                <span><AiOutlineSearch size={24} /></span>
-                <span>Search</span>
-              </a>
-            </li>
-            <li className="my-2">
-              <a
-                href="/"
-                onClick={e => {
-                  e.preventDefault();
-                  handleClick({ id: 4, text: "Create", link: "/#", icon: <AiOutlinePlusSquare size={24} /> });
-                }}
-                className="flex items-center gap-3 p-2 text-sm text-black hover:bg-gray-100 cursor-pointer"
-              >
-                <span><AiOutlinePlusSquare size={24} /></span>
-                <span>Create</span>
-              </a>
-            </li>
-            <li className="my-2">
-              <Link to='/Profile'
-                className="flex items-center gap-3 p-2 text-sm text-black hover:bg-gray-100 cursor-pointer"
-              >
-                <span><AiOutlineProfile size={24} /></span>
-                <span>Profile</span>
-              </Link>
-            </li>
+          <li className="my-2">
+            <img src={logo} alt='home' className="w-20 h-auto object-contain" />
+          </li>
+          <li className="my-2">
+            <Link
+              to="/"
+              onClick={() => setIsSearchOpen(false)}
+              className="flex items-center gap-3 p-2 text-sm text-black hover:bg-gray-100 cursor-pointer"
+            >
+              <AiOutlineHome size={24} />
+              {!isSearchOpen && <span>Home</span>}
+            </Link>
+          </li>
+          <li className="my-2">
+            <a
+              href="/"
+              onClick={e => {
+                e.preventDefault();
+                handleClick({ id: 3, text: "Search", link: "/#", icon: <AiOutlineSearch size={24} /> });
+              }}
+              className="flex items-center gap-3 p-2 text-sm text-black hover:bg-gray-100 cursor-pointer"
+            >
+              <AiOutlineSearch size={24} />
+              {!isSearchOpen && <span>Search</span>}
+            </a>
+          </li>
+          <li className="my-2">
+            <a
+              href="/"
+              onClick={e => {
+                e.preventDefault();
+                handleClick({ id: 4, text: "Create", link: "/#", icon: <AiOutlinePlusSquare size={24} /> });
+              }}
+              className="flex items-center gap-3 p-2 text-sm text-black hover:bg-gray-100 cursor-pointer"
+            >
+              <AiOutlinePlusSquare size={24} />
+              {!isSearchOpen && <span>Create</span>}
+            </a>
+          </li>
+          <li className="my-2">
+            <Link
+              to='/Profile'
+              onClick={() => setIsSearchOpen(false)}
+              className="flex items-center gap-3 p-2 text-sm text-black hover:bg-gray-100 cursor-pointer"
+            >
+              <AiOutlineProfile size={24} />
+              {!isSearchOpen && <span>Profile</span>}
+            </Link>
+          </li>
         </ul>
       </nav>
 
@@ -161,4 +160,3 @@ export default function Sidebar() {
     </div>
   );
 }
-
