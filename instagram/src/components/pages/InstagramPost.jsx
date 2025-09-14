@@ -1,17 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
+import profileImage from '../../assets/icons/Profile.png'
+import postImage from '../../assets/icons/Frame (1).png'
 
-const InstagramPost = ({
-  profileImage,
-  username,
-  postImage,
-  caption,
-  initialLikes = 0,
-  commentsCount,
-  timeAgo
-}) => {
+const InstagramPost = ({username, content, likess, comments}) => {
+  const commentsCount = comments.length
+  const initialLikes = likess.length
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(initialLikes);
-
+  console.log(initialLikes)
   const toggleLike = () => {
     if (liked) {
       setLikes(likes - 1);
@@ -79,9 +75,9 @@ const InstagramPost = ({
       </div>
 
       <div className="px-4 pb-4">
-        <p className="font-bold mb-1">{likes.toLocaleString()} likes</p>
-        <p className="mb-1">{caption}</p>
-        <p className="text-gray-500 text-sm mb-2">{timeAgo}</p>
+        <p className="font-bold mb-1">{likes} likes</p>
+        <p className="mb-1">{content}</p>
+        <p className="text-gray-500 text-sm mb-2">5h</p>
         <p className="text-blue-600 cursor-pointer">{commentsCount} comments</p>
       </div>
     </div>

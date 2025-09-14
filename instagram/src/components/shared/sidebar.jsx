@@ -49,7 +49,7 @@ export default function   Sidebar() {
                             className="flex items-center gap-4 p-2 text-sm"
                         >
                             {item.isImage ? (
-                                <img src={item.icon} alt={item.text} className="sidebar-icon" className="w-24 h-8 object-contain" />
+                                <img src={item.icon} alt={item.text} className="sidebar-icon w-24 h-8 object-contain" />
                             ) : (
                                 <span className="sidebar-icon">{item.icon}</span>
                             )}

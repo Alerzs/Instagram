@@ -1,20 +1,33 @@
-import React from 'react'
-import InstagramPost from './InstagramPost'
+import { Container } from './Container.jsx';
+import Sidebar from '../shared/sidebar.jsx'
+import { useEffect, useState } from 'react'
+import { client } from "../lib";
 
 export default function Home() {
-    return (
+    const [postData, setPostData] = useState([])
 
-        <div>
-            <InstagramPost
-                profileImage="/Auto%20Layout%20Horizontal.png"
-                username="lewishamilton"
-                postImage="/Auto%20Layout%20Horizontal(2).png"
-                caption="This is the caption of the post"
-                initialLikes={741285}
-                commentsCount={11354}
-                timeAgo="5h"
-            />
-        </div>
+    useEffect(() => {
+        const token = localStorage.getItem("jwttoken")
+        async function getData() {
+            const res = await client.get("/article/timeline?page=1&limit=5",{
+            headers: { Authorization: `Bearer ${token}` }}
+            )
+            setPostData(res?.data?.Articles)
+            console.log(res?.data?.Articles)
+        }
+        getData()
+    }, [])
 
+
+    return ( 
+        <>
+        {postData.length > 0 ? (
+            <div className="flex">
+            <Sidebar />
+            <Container data={postData} />
+            </div>
+        ) : null}
+        </>
+        
     )
 }
