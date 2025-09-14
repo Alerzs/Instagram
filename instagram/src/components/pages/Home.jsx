@@ -1,10 +1,12 @@
 import React from 'react'
 import InstagramPost from './InstagramPost'
+import Sidebar from '../shared/sidebar'
 
 export default function Home() {
     return (
 
-        <div>
+        <div className='flex'>
+            <Sidebar />
             <InstagramPost
                 profileImage="/Auto%20Layout%20Horizontal.png"
                 username="lewishamilton"
