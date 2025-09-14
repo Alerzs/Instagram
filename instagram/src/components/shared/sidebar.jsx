@@ -1,63 +1,62 @@
-import React from 'react';
-// import { NavLink } from 'react-router';
-
+import React, { useState } from 'react';
 import logo from '../../assets/icons/logo.png';
+import { AiOutlineHome, AiOutlineSearch, AiOutlinePlusSquare, AiOutlineProfile } from 'react-icons/ai';
+import SearchResults from './SearchResults';
 
-import { AiOutlineHome, AiOutlineSearch, AiOutlinePlusSquare, AiOutlineUser, AiOutlineProfile } from 'react-icons/ai'; 
+export default function Sidebar() {
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
+  const sideBarItem = [
+    { id: 1, text: "", link: "/", icon: logo, isImage: true },
+    { id: 2, text: "Home", link: "/", icon: <AiOutlineHome size={24} /> },
+    { id: 3, text: "Search", link: "/#", icon: <AiOutlineSearch size={24} /> },
+    { id: 4, text: "Create", link: "/#", icon: <AiOutlinePlusSquare size={24} /> },
+    { id: 5, text: "Profile", link: "/#", icon: <AiOutlineProfile size={24} /> },
+  ];
 
+  const handleClick = (item) => {
+    if (item.text === "Search") {
+      setIsSearchOpen(true);
+    } else {
+      setIsSearchOpen(false);
+    }
+  };
 
-export default function   Sidebar() {
-    const sideBarItem= [
-        {id:1,
-            text:"",
-            link:"/",
-            icon:logo,
-            isImage: true,
-      
-        },
-         {id:2,
-            text:"Home",
-            link:"/",
-            icon: <AiOutlineHome />
-        },
-         {id:3,
-            text:"Search",
-            link:"/#",
-            icon: <AiOutlineSearch />
-        }
-        ,
-         {id:4,
-            text:"create",
-            link:"/#",
-            icon: <AiOutlinePlusSquare />
-        }
-        ,
-         {id:5,
-            text:"Profile",
-            link:"/#",
-            icon:<AiOutlineProfile />
-        }
+  return (
+    <div className="flex h-[625px]">
+      <nav
+        className={`border-r border-gray-300 transition-all duration-300 ease-in-out
+          ${isSearchOpen ? 'w-16' : 'w-48'}
+        `}
+      >
+        <ul className="list-none p-0 m-0">
+          {sideBarItem.map(item => (
+            <li key={item.id} className="my-2">
+              <a
+                href="#"
+                onClick={e => {
+                  e.preventDefault();
+                  handleClick(item);
+                }}
+                className="flex items-center gap-3 p-2 text-sm text-black hover:bg-gray-100 cursor-pointer"
+              >
+                {item.isImage ? (
+                  <img src={item.icon} alt={item.text} className="w-20 h-auto object-contain" />
+                ) : (
+                  <span>{item.icon}</span>
+                )}
+                {item.text && !isSearchOpen && <span>{item.text}</span>}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
-    ]
- return (
-        <nav className="sidebar w-[145px] h-[625px] border-r border-gray-300 ">
-            <ul className="sidebar-menu">
-                {sideBarItem.map(item => (
-                    <li key={item.id}>
-                        <a href='#'
-                            className="flex items-center gap-4 p-2 text-sm"
-                        >
-                            {item.isImage ? (
-                                <img src={item.icon} alt={item.text} className="sidebar-icon" className="w-24 h-8 object-contain" />
-                            ) : (
-                                <span className="sidebar-icon">{item.icon}</span>
-                            )}
-                            {item.text && <span>{item.text}</span>}
-                        </a>
-                    </li>
-                ))}
-            </ul>
-        </nav>
-    );
+      {isSearchOpen && (
+        <div className="w-72 p-5 border-l border-gray-300 bg-white">
+          <SearchResults />
+        </div>
+      )}
+    </div>
+  );
 }
